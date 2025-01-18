@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "CabinetGrotesk-Variable";
+  src: url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Variable.woff2")
+      format("woff2"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Variable.woff")
+      format("woff"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Variable.ttf")
+      format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk-Thin";
+  src: url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Thin.woff2")
+      format("woff2"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Thin.woff")
+      format("woff"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Thin.ttf")
+      format("truetype");
+  font-weight: 100;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk-Extralight";
+  src: url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Extralight.woff2")
+      format("woff2"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Extralight.woff")
+      format("woff"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Extralight.ttf")
+      format("truetype");
+  font-weight: 200;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk-Light";
+  src: url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Light.woff2")
+      format("woff2"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Light.woff")
+      format("woff"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Light.ttf")
+      format("truetype");
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk-Regular";
+  src: url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Regular.woff2")
+      format("woff2"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Regular.woff")
+      format("woff"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Regular.ttf")
+      format("truetype");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk-Medium";
+  src: url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Medium.woff2")
+      format("woff2"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Medium.woff")
+      format("woff"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Medium.ttf")
+      format("truetype");
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk-Bold";
+  src: url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Bold.woff2")
+      format("woff2"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Bold.woff")
+      format("woff"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Bold.ttf")
+      format("truetype");
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk-Extrabold";
+  src: url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Extrabold.woff2")
+      format("woff2"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Extrabold.woff")
+      format("woff"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Extrabold.ttf")
+      format("truetype");
+  font-weight: 800;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CabinetGrotesk-Black";
+  src: url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Black.woff2")
+      format("woff2"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Black.woff")
+      format("woff"),
+    url("/public/fonts/CabinetGrotesk_Complete/CabinetGrotesk-Black.ttf")
+      format("truetype");
+  font-weight: 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+* {
+  font-family: "CabinetGrotesk-Variable";
+}
+
+#root {
+  max-width: 375px;
+  width: 100%;
+  background-color: #fff9e4;
+  display: flex;
+  margin: auto;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.quiz {
+  padding: 32px;
+}
+
+@layer components {
+  .button-hover-click {
+    @apply transition active:shadow-none active:translate-x-[5px] active:translate-y-[5px] active:before:-translate-y-[13px];
+  }
+
+  .border-bottom-black {
+    @apply border-b-4 border-primary-black;
+  }
+
+  .drawer-parent-style {
+    @apply absolute z-10 w-full h-[100vh] bg-[#fff9e4] top-0 bottom-0 translate-x-full transition-transform ease-in-out duration-300;
+  }
+
+  .drawer-p {
+    @apply text-black text-opacity-80 text-2xl font-medium;
+  }
+
+  .drawer-h3 {
+    @apply text-2xl text-primary-black font-bold;
+  }
+
+  .input-toggle-switch-style {
+    @apply w-[76px] h-[44px] p-4 appearance-none border-4 border-slate-700 rounded-full bg-white before:w-7 before:h-7 before:absolute before:left-2 before:top-[42%] before:-translate-y-1/2 before:rounded-full before:bg-primary-black checked:before:translate-x-[20px] checked:before:left-auto before:transition-all shadow-option-shadow checked:bg-[#43DD65] checked:before:bg-[#0D2B14];
+  }
+}
