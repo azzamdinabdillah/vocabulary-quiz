@@ -6,6 +6,7 @@ import {
   DrawerStatsContext,
 } from "../context/DrawerContext";
 import db from "../../appwrite/databases";
+import Countdown from "react-countdown";
 
 function QuizForm() {
   interface IQuiz {
@@ -83,11 +84,29 @@ function QuizForm() {
       <div className="flex justify-between items-center border-bottom-black py-[10px]">
         <div className="flex items-center">
           <img src="/icons/interrogation.svg" alt="" />
-          <p className="text-primary-black font-bold text-base">05/08</p>
+          <p className="text-primary-black font-bold text-base">
+            {(drawerStatsContext?.answerStats.answered ?? 0) + 1}/
+            {quizes.length}
+          </p>
         </div>
         <p className="text-primary-black font-bold text-base">150 Points</p>
         <div className="flex items-center">
-          <p className="text-primary-black font-bold text-base">04:23</p>
+          <p className="text-primary-black font-bold text-base">
+            <Countdown
+              date={Date.now() + .2 * 60 * 1000}
+              renderer={({ minutes, seconds }) => {
+                const formatTime = (time: number): number | string =>
+                  time < 10 ? `0${time}` : time;
+                return (
+                  <>
+                    <span>
+                      {formatTime(minutes)}:{formatTime(seconds)}
+                    </span>
+                  </>
+                );
+              }}
+            />
+          </p>
           <img src="/icons/clock.svg" alt="" />
         </div>
       </div>
