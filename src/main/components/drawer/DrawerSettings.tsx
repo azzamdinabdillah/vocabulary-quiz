@@ -1,9 +1,37 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DrawerSettingsContext } from "../../context/DrawerContext";
 import { CloseIconNavbar } from "../Navbar";
 
 function DrawerSettings() {
   const drawerSettingsContext = useContext(DrawerSettingsContext);
+  const [playMusic, setPlayMusic] = useState<boolean>(false);
+
+  useEffect(() => {
+    let music: HTMLAudioElement | null = null;
+
+    if (playMusic) {
+      music = new Audio("/sounds/background-music.mp3");
+      music.play();
+
+      const repeatMusic = () => {
+        if (music) {
+          music.currentTime = 0;
+          music.play();
+        }
+      };
+
+      music.addEventListener("ended", repeatMusic);
+
+      return () => {
+        if (music) {
+          music.removeEventListener("ended", repeatMusic);
+          music.pause();
+          music.currentTime = 0;
+        }
+      };
+    }
+  }, [playMusic]);
+
   return (
     <>
       <div
@@ -27,7 +55,15 @@ function DrawerSettings() {
               </div>
 
               <div className="relative translate-y-1">
-                <input type="checkbox" className="input-toggle-switch-style" />
+                <input
+                  type="checkbox"
+                  className="input-toggle-switch-style"
+                  name="music-switch"
+                  checked={playMusic}
+                  onChange={(e) => {
+                    setPlayMusic(e.target.checked);
+                  }}
+                />
               </div>
             </div>
 
@@ -38,7 +74,15 @@ function DrawerSettings() {
               </div>
 
               <div className="relative translate-y-1">
-                <input type="checkbox" className="input-toggle-switch-style" />
+                <input
+                  type="checkbox"
+                  className="input-toggle-switch-style"
+                  name="sound-switch"
+                  checked={drawerSettingsContext?.onSound}
+                  onChange={(e) => {
+                    drawerSettingsContext?.setOnSound(e.target.checked);
+                  }}
+                />
               </div>
             </div>
           </div>

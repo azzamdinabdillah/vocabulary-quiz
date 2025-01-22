@@ -1,18 +1,23 @@
-import { createContext } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
+import { AnsweredIF } from "../interfaces/AnsweredStats";
 
-const DrawerStatsContext = createContext<
-  | {
-      openStatsDrawer: boolean;
-      setOpenStatsDrawer: Function;
-    }
-  | undefined
->(undefined);
-const DrawerSettingsContext = createContext<
-  | {
-      openSettingsDrawer: boolean;
-      setOpenSettingsDrawer: Function;
-    }
-  | undefined
->(undefined);
+interface DrawerSettingsIF {
+  openSettingsDrawer: boolean;
+  setOpenSettingsDrawer: Dispatch<SetStateAction<boolean>>;
+  onSound: boolean;
+  setOnSound: Dispatch<SetStateAction<boolean>>;
+}
+
+interface DrawerStatsIF {
+  openStatsDrawer: boolean;
+  setOpenStatsDrawer: Dispatch<SetStateAction<boolean>>;
+  answerStats: AnsweredIF;
+  setAnswerStats: Dispatch<SetStateAction<AnsweredIF>>;
+}
+
+const DrawerStatsContext = createContext<DrawerStatsIF | undefined>(undefined);
+const DrawerSettingsContext = createContext<DrawerSettingsIF | undefined>(
+  undefined
+);
 
 export { DrawerStatsContext, DrawerSettingsContext };

@@ -1,5 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button, { ColorVariants } from "../components/Button";
+import { Fragment } from "react";
+import {
+  DrawerSettingsContext,
+  DrawerStatsContext,
+} from "../context/DrawerContext";
+import db from "../../appwrite/databases";
 
 function QuizForm() {
   interface IQuiz {
@@ -9,6 +15,8 @@ function QuizForm() {
 
   const [quizes, setQuizes] = useState<IQuiz[]>([]);
   const [activeQuestion, setActiveQuestion] = useState<number>(0);
+  const drawerSettingsContext = useContext(DrawerSettingsContext);
+  const drawerStatsContext = useContext(DrawerStatsContext);
 
   function randomIndex() {
     return Math.floor(Math.random() * quizes.length);
@@ -17,23 +25,47 @@ function QuizForm() {
   function handleOptionClick(answer: string, answerKey: string): void {
     setActiveQuestion((prevState) => prevState + 1);
     const answerSplit = answer.split(" ");
+    const audio = new Audio("/sounds/option-hit.mp3");
 
     if (answerKey === answerSplit[1]) {
-      console.log("benar");
+      drawerStatsContext?.setAnswerStats((prevState) => {
+        return {
+          answered: prevState.answered + 1,
+          rightAnswered: prevState.rightAnswered + 1,
+          wrongAnswered: prevState.wrongAnswered,
+        };
+      });
     } else {
-      console.log("salah");
+      drawerStatsContext?.setAnswerStats((prevState) => {
+        return {
+          answered: prevState.answered + 1,
+          rightAnswered: prevState.rightAnswered,
+          wrongAnswered: prevState.wrongAnswered + 1,
+        };
+      });
+    }
+
+    if (activeQuestion === quizes.length - 1) {
+      setActiveQuestion(0);
+      drawerStatsContext?.setAnswerStats({
+        answered: 0,
+        rightAnswered: 0,
+        wrongAnswered: 0,
+      });
+    }
+
+    if (drawerSettingsContext?.onSound) {
+      audio.play();
     }
   }
 
   async function fetchData(): Promise<IQuiz[] | void> {
-    const response = await fetch("/datas/quiz.json", {
-      headers: {
-        "Cache-Control": "no-cache",
-        "Content-Type": "application/json",
-      },
-    });
-    const result = await response.json();
-    setQuizes(result);
+    try {
+      const result = await db.lists.readAll();
+      setQuizes(result.documents);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
@@ -75,7 +107,7 @@ function QuizForm() {
           ].sort(() => Math.random() - 0.5);
 
           return (
-            <>
+            <Fragment key={index}>
               <h2 className="text-primary-black font-extrabold text-2xl">
                 {index + 1}. Apa Bahasa Indonesia Dari {quiz.english}
               </h2>
@@ -83,85 +115,27 @@ function QuizForm() {
               <div className="gap-3 flex flex-col">
                 {options.map((opt, idx) => (
                   <Button
+                    key={idx}
                     onClick={(e) =>
                       handleOptionClick(
                         e.currentTarget.textContent!,
                         quiz.indonesian
                       )
                     }
-                    colorVariant={["pink", "green", "yellow", "blue"][idx % options.length] as ColorVariants}
+                    colorVariant={
+                      ["pink", "green", "yellow", "blue"][
+                        idx % options.length
+                      ] as ColorVariants
+                    }
                   >
                     {String.fromCharCode(65 + idx)}) {opt}
                   </Button>
                 ))}
                 ;
               </div>
-            </>
+            </Fragment>
           );
         })}
-        {/* {quizes.map((quiz, index) => (
-          <>
-            {activeQuestion === index ? (
-              <>
-                <h2 className="text-primary-black font-extrabold text-2xl">
-                  {index + 1}. Apa Bahasa Indonesia Dari {quiz.english}
-                </h2>
-                <div className="gap-3 flex flex-col">
-                  <Button
-                    onClick={(e) =>
-                      handleOptionClick(
-                        e.currentTarget.textContent!,
-                        quiz.indonesian
-                      )
-                    }
-                    colorVariant="pink"
-                  >
-                    A) {quiz.indonesian}
-                  </Button>
-                  <Button
-                    onClick={(e) =>
-                      handleOptionClick(
-                        e.currentTarget.textContent!,
-                        quiz.indonesian
-                      )
-                    }
-                    colorVariant="green"
-                  >
-                    B) {quizes[randomIndex()].english}
-                  </Button>
-                  <Button
-                    onClick={(e) =>
-                      handleOptionClick(
-                        e.currentTarget.textContent!,
-                        quiz.indonesian
-                      )
-                    }
-                    colorVariant="yellow"
-                  >
-                    C) {quizes[randomIndex()].english}
-                  </Button>
-                  <Button
-                    onClick={(e) =>
-                      handleOptionClick(
-                        e.currentTarget.textContent!,
-                        quiz.indonesian
-                      )
-                    }
-                    colorVariant="blue"
-                  >
-                    D) {quizes[randomIndex()].english}
-                  </Button>
-                </div>
-              </>
-            ) : (
-              ""
-            )}
-
-            <Button colorVariant="green">B) Andrew Jacks</Button>
-            <Button colorVariant="yellow">C) Thomas Jefferson</Button>
-            <Button colorVariant="blue">D) Grover Cleveland</Button>
-          </>
-        ))} */}
       </div>
     </div>
   );

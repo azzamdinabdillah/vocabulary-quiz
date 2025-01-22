@@ -20,7 +20,7 @@ function DrawerStats() {
           <div className="flex justify-between items-center">
             <h3>Answered:</h3>
             <p className="drawer-p">
-              5
+              {drawerStatsContext?.answerStats.answered}
             </p>
           </div>
 
@@ -30,7 +30,7 @@ function DrawerStats() {
               <h3>Right answers:</h3>
             </div>
             <p className="drawer-p">
-              3
+              {drawerStatsContext?.answerStats.rightAnswered}
             </p>
           </div>
           <div className="flex justify-between items-center">
@@ -39,7 +39,7 @@ function DrawerStats() {
               <h3>Wrong answers:</h3>
             </div>
             <p className="drawer-p">
-              2
+              {drawerStatsContext?.answerStats.wrongAnswered}
             </p>
           </div>
         </div>
