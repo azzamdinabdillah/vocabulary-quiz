@@ -26,7 +26,7 @@ function Quiz() {
       <DrawerStatsContext.Provider
         value={{ openStatsDrawer, setOpenStatsDrawer, answerStats, setAnswerStats }}
       >
-        <div className="w-full relative">
+        <div className="w-full relative main-quiz-page">
           <MainNavbar />
 
           <DrawerStats />

@@ -124,20 +124,50 @@
 }
 
 #root {
-  max-width: 375px;
-  width: 100%;
-  background-color: #fff9e4;
   display: flex;
   margin: auto;
-  min-height: 100vh;
+  width: 100%;
+  justify-content: center;
+}
+
+.main-quiz-page {
+  max-width: 375px;
   overflow: hidden;
+  min-height: 100vh;
+  background-color: #fff9e4;
+}
+
+.dashboard-page {
+  min-height: 100vh;
+  background-color: #fff9e4;
 }
 
 .quiz {
   padding: 32px;
 }
 
+/* .rdt_TableRow{
+  background-color: black !important;
+}
+
+.rdt_TableCell{
+  background-color: blue !important;
+  padding: 10px !important;
+} */
+
 @layer components {
+  .label-custom {
+    @apply text-base font-semibold inline-block mb-1;
+  }
+
+  .input-custom {
+    @apply p-2.5 px-4 outline-none rounded-md border-[3px] border-gray-900 bg-white w-full font-bold placeholder:text-sm placeholder:font-semibold placeholder:leading-5 placeholder:text-gray-400 focus:outline-[3px] focus:outline-[#151515] focus:outline-offset-[3px];
+  }
+
+  .title {
+    @apply text-primary-black text-[32px] font-extrabold;
+  }
+
   .button-hover-click {
     @apply transition active:shadow-none active:translate-x-[5px] active:translate-y-[5px] active:before:-translate-y-[13px];
   }

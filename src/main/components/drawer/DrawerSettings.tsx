@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { DrawerSettingsContext } from "../../context/DrawerContext";
 import { CloseIconNavbar } from "../Navbar";
+import Button from "../Button";
 
 function DrawerSettings() {
   const drawerSettingsContext = useContext(DrawerSettingsContext);
@@ -43,7 +44,7 @@ function DrawerSettings() {
       >
         <CloseIconNavbar />
         <div className="quiz">
-          <h1 className="text-primary-black text-[32px] font-extrabold">
+          <h1 className="title">
             Settings
           </h1>
 
@@ -85,6 +86,12 @@ function DrawerSettings() {
                 />
               </div>
             </div>
+          </div>
+
+          <div className="mt-10">
+            <Button colorVariant="green">
+              <a href="/dashboard">Go To Dashboard Pages</a>
+            </Button>
           </div>
         </div>
       </div>

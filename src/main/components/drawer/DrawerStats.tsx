@@ -14,7 +14,7 @@ function DrawerStats() {
     >
       <CloseIconNavbar />
       <div className="quiz">
-        <h1 className="text-primary-black text-[32px] font-extrabold">Stats</h1>
+        <h1 className="title">Stats</h1>
 
         <div className="flex flex-col gap-1 border-bottom-black pb-4 drawer-h3">
           <div className="flex justify-between items-center">

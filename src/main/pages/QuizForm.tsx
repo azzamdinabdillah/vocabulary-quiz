@@ -7,15 +7,14 @@ import {
 } from "../context/DrawerContext";
 import db from "../../appwrite/databases";
 import Countdown from "react-countdown";
+import { VocabularyIF } from "../interfaces/Vocabulary";
 
 function QuizForm() {
-  interface IQuiz {
-    english: string;
-    indonesian: string;
-  }
-
-  const [quizes, setQuizes] = useState<IQuiz[]>([]);
+  const [quizes, setQuizes] = useState<VocabularyIF[]>([]);
   const [activeQuestion, setActiveQuestion] = useState<number>(0);
+  const [countdownTime, setCoundownTime] = useState<number>(
+    Date.now() + 5 * 60 * 1000
+  );
   const drawerSettingsContext = useContext(DrawerSettingsContext);
   const drawerStatsContext = useContext(DrawerStatsContext);
 
@@ -60,7 +59,7 @@ function QuizForm() {
     }
   }
 
-  async function fetchData(): Promise<IQuiz[] | void> {
+  async function fetchData(): Promise<VocabularyIF[] | void> {
     try {
       const result = await db.lists.readAll();
       setQuizes(result.documents);
@@ -93,15 +92,20 @@ function QuizForm() {
         <div className="flex items-center">
           <p className="text-primary-black font-bold text-base">
             <Countdown
-              date={Date.now() + .2 * 60 * 1000}
-              renderer={({ minutes, seconds }) => {
+              date={countdownTime}
+              renderer={({ minutes, seconds, completed }) => {
                 const formatTime = (time: number): number | string =>
                   time < 10 ? `0${time}` : time;
+
                 return (
                   <>
-                    <span>
-                      {formatTime(minutes)}:{formatTime(seconds)}
-                    </span>
+                    {!completed ? (
+                      <span>
+                        {formatTime(minutes)}:{formatTime(seconds)}
+                      </span>
+                    ) : (
+                      <span>Selesai</span>
+                    )}
                   </>
                 );
               }}
@@ -127,7 +131,7 @@ function QuizForm() {
 
           return (
             <Fragment key={index}>
-              <h2 className="text-primary-black font-extrabold text-2xl">
+              <h2 className="text-primary-black font-extrabold text-2xl capitalize">
                 {index + 1}. Apa Bahasa Indonesia Dari {quiz.english}
               </h2>
 

@@ -13,6 +13,7 @@
     "appwrite": "^16.1.0",
     "react": "^18.3.1",
     "react-countdown": "^2.3.6",
+    "react-data-table-component": "^7.6.2",
     "react-dom": "^18.3.1",
     "react-router": "^7.1.1"
   },
