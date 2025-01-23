@@ -1,3 +1,4 @@
+import { ID } from "appwrite";
 import { databases } from "./config";
 
 const db = {};
@@ -14,6 +15,14 @@ collections.forEach((collection) => {
   db[collection.name] = {
     readAll: (queries = []) => {
       return databases.listDocuments(collection.dbId, collection.id, queries);
+    },
+    create: (datas, id = ID.unique()) => {
+      return databases.createDocument(
+        collection.dbId,
+        collection.id,
+        id,
+        datas
+      );
     },
   };
 });

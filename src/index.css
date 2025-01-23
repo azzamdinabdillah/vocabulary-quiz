@@ -146,14 +146,58 @@
   padding: 32px;
 }
 
-/* .rdt_TableRow{
-  background-color: black !important;
+.table-wrapper > div:nth-child(1) {
+  border: 3px solid #43dd65;
+  border-radius: 10px;
+  overflow-y: hidden;
 }
 
-.rdt_TableCell{
-  background-color: blue !important;
-  padding: 10px !important;
+.table-wrapper > div:nth-child(1)::-webkit-scrollbar {
+  display: none;
+}
+
+.rdt_Table * {
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.rdt_TableHeadRow {
+  min-height: 40px !important;
+}
+
+.rdt_TableCol {
+  background-color: #f2ca3c;
+}
+
+.rdt_TableHeadRow {
+  border-bottom-width: 0 !important;
+}
+
+.rdt_TableCol {
+  padding-left: 10px !important;
+  padding-right: 0 !important;
+}
+
+/* .rdt_TableCol:last-child {
+  padding-right: 200px !important;
 } */
+
+.rdt_TableRow {
+  background-color: #43dd65 !important;
+}
+
+.rdt_TableRow:hover {
+  background-color: #f2ca3c !important;
+  border-bottom-width: 0px !important;
+  border-top-width: 0px !important;
+  outline-width: 0px !important;
+}
+
+.rdt_TableCell {
+  /* background-color: #43DD65 !important; */
+  padding: 10px !important;
+  /* flex-grow: 0 !important; */
+}
 
 @layer components {
   .label-custom {

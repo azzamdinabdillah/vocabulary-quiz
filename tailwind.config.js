@@ -11,6 +11,7 @@ export default {
       },
       colors: {
         "primary-black": "#151515",
+        "primary-blue": "#3C9BF2",
       },
     },
   },

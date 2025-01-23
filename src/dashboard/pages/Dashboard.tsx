@@ -1,19 +1,22 @@
 import DataTable from "react-data-table-component";
 import Button from "../../main/components/Button";
-import InputText from "../components/Inputs";
 import { useEffect, useState } from "react";
 import { VocabularyIF } from "../../main/interfaces/Vocabulary";
 import db from "../../appwrite/databases";
 import { CustomPagination } from "../components/Pagination";
+import AddVocabularyForm from "../components/AddVocabularyForm";
 
 export default function Dashboard() {
   const [vocabularies, setVocabularies] = useState<VocabularyIF[]>([]);
+  const [inputs, setInputs] = useState<VocabularyIF>({
+    english: "",
+    indonesian: "",
+  });
 
   async function fetchData() {
     try {
       const result = await db.lists.readAll();
       setVocabularies(result.documents);
-      console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -29,6 +32,7 @@ export default function Dashboard() {
       name: "No",
       selector: (_row: any, index: number) => index + 1,
       sortable: true,
+      width: "50px",
     },
     { name: "English", selector: (row: any) => row.english, sortable: true },
     {
@@ -41,44 +45,45 @@ export default function Dashboard() {
       selector: (row: any) => row.$id,
       omit: true,
     },
+    {
+      name: "action",
+      cell: (row: any) => (
+        <div className="flex gap-2">
+          <Button
+            colorVariant="blue"
+            sizeVariant="xs"
+            onClick={() => console.log(row.$id)}
+          >
+            Edit
+          </Button>
+          <Button colorVariant="pink" sizeVariant="xs">
+            Hapus
+          </Button>
+        </div>
+      ),
+    },
   ];
 
   return (
     <>
-      <div className="dashboard-page w-full px-5 py-5 flex flex-col gap-3">
-        <h1 className="title">Dashboard</h1>
+      <div className="dashboard-page w-full px-5 py-5">
+        <div className="w-full flex flex-col gap-3 md:max-w-[665px] mx-auto">
+          <h1 className="title">Dashboard</h1>
 
-        <div className="bg-white p-4 rounded-md flex flex-col gap-3">
-          <div>
-            <label htmlFor="" className="label-custom">
-              English
-            </label>
-            <InputText placeholder="Insert Your English Vocabulary Here.." />
+          <AddVocabularyForm inputs={inputs} setInputs={setInputs} fetchData={fetchData}/>
+
+          <div className="bg-white p-4 rounded-md">
+            <div className="table-wrapper">
+              <DataTable
+                columns={columns}
+                data={vocabularies}
+                pagination
+                paginationComponent={CustomPagination} // Menggunakan pagination kustom
+                paginationPerPage={5}
+                highlightOnHover
+              />
+            </div>
           </div>
-
-          <div>
-            <label htmlFor="" className="label-custom">
-              Indonesian
-            </label>
-            <InputText placeholder="Insert Your Indonesian Vocabulary Here.." />
-          </div>
-
-          <div className="mt-1">
-            <Button colorVariant="blue" sizeVariant="regular">
-              Add To My Vocabluary List
-            </Button>
-          </div>
-        </div>
-
-        <div className="bg-white p-4 rounded-md">
-          <DataTable
-            columns={columns}
-            data={vocabularies}
-            pagination
-            paginationComponent={CustomPagination} // Menggunakan pagination kustom
-            paginationPerPage={2}
-            highlightOnHover
-          />
         </div>
       </div>
     </>
