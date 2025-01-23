@@ -154,7 +154,6 @@ function QuizForm() {
                     {String.fromCharCode(65 + idx)}) {opt}
                   </Button>
                 ))}
-                ;
               </div>
             </Fragment>
           );
