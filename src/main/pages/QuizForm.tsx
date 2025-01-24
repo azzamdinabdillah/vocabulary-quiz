@@ -8,8 +8,10 @@ import {
 import db from "../../appwrite/databases";
 import Countdown from "react-countdown";
 import { VocabularyIF } from "../interfaces/Vocabulary";
+import Loading from "../../common-components/Loading";
 
 function QuizForm() {
+  const [loading, setLoading] = useState<boolean>(false);
   const [quizes, setQuizes] = useState<VocabularyIF[]>([]);
   const [activeQuestion, setActiveQuestion] = useState<number>(0);
   const [countdownTime, setCoundownTime] = useState<number>(
@@ -61,10 +63,13 @@ function QuizForm() {
 
   async function fetchData(): Promise<VocabularyIF[] | void> {
     try {
+      setLoading(true);
       const result = await db.lists.readAll();
       setQuizes(result.documents);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -115,49 +120,55 @@ function QuizForm() {
         </div>
       </div>
       <div className="flex flex-col gap-8">
-        {quizes.map((quiz, index) => {
-          if (activeQuestion !== index) return null;
+        {loading ? (
+          <div className="w-full mx-auto flex justify-center mt-5">
+            <Loading size="lg" />
+          </div>
+        ) : (
+          quizes.map((quiz, index) => {
+            if (activeQuestion !== index) return null;
 
-          const correctAnswer = quiz.indonesian;
-          const wrongAnswer = quizes
-            .filter((q) => q.indonesian !== correctAnswer)
-            .sort(() => Math.random() - 0.5)
-            .slice(0, 3);
+            const correctAnswer = quiz.indonesian;
+            const wrongAnswer = quizes
+              .filter((q) => q.indonesian !== correctAnswer)
+              .sort(() => Math.random() - 0.5)
+              .slice(0, 3);
 
-          const options = [
-            correctAnswer,
-            ...wrongAnswer.map((q) => q.indonesian),
-          ].sort(() => Math.random() - 0.5);
+            const options = [
+              correctAnswer,
+              ...wrongAnswer.map((q) => q.indonesian),
+            ].sort(() => Math.random() - 0.5);
 
-          return (
-            <Fragment key={index}>
-              <h2 className="text-primary-black font-extrabold text-2xl capitalize">
-                {index + 1}. Apa Bahasa Indonesia Dari {quiz.english}
-              </h2>
+            return (
+              <Fragment key={index}>
+                <h2 className="text-primary-black font-extrabold text-2xl capitalize">
+                  {index + 1}. Apa Bahasa Indonesia Dari {quiz.english}
+                </h2>
 
-              <div className="gap-3 flex flex-col">
-                {options.map((opt, idx) => (
-                  <Button
-                    key={idx}
-                    onClick={(e) =>
-                      handleOptionClick(
-                        e.currentTarget.textContent!,
-                        quiz.indonesian
-                      )
-                    }
-                    colorVariant={
-                      ["pink", "green", "yellow", "blue"][
-                        idx % options.length
-                      ] as ColorVariants
-                    }
-                  >
-                    {String.fromCharCode(65 + idx)}) {opt}
-                  </Button>
-                ))}
-              </div>
-            </Fragment>
-          );
-        })}
+                <div className="gap-3 flex flex-col">
+                  {options.map((opt, idx) => (
+                    <Button
+                      key={idx}
+                      onClick={(e) =>
+                        handleOptionClick(
+                          e.currentTarget.textContent!,
+                          quiz.indonesian
+                        )
+                      }
+                      colorVariant={
+                        ["pink", "green", "yellow", "blue"][
+                          idx % options.length
+                        ] as ColorVariants
+                      }
+                    >
+                      {String.fromCharCode(65 + idx)}) {opt}
+                    </Button>
+                  ))}
+                </div>
+              </Fragment>
+            );
+          })
+        )}
       </div>
     </div>
   );
