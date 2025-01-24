@@ -13,6 +13,7 @@ export default {
         "primary-black": "#151515",
         "primary-blue": "#3C9BF2",
         "primary-pink": "#F03986",
+        "primary-yellow": "#F2CA3C",
       },
     },
   },

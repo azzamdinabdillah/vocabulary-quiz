@@ -24,6 +24,8 @@ collections.forEach((collection) => {
         datas
       );
     },
+    delete: (id) =>
+      databases.deleteDocument(collection.dbId, collection.id, id),
   };
 });
 
