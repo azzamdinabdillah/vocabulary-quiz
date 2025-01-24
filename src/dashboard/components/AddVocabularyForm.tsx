@@ -5,7 +5,6 @@ import {
   Dispatch,
   FormEvent,
   SetStateAction,
-  useEffect,
   useState,
 } from "react";
 import { VocabularyIF } from "../../main/interfaces/Vocabulary";
@@ -22,21 +21,10 @@ export default function AddVocabularyForm({
   inputs: VocabularyIF;
   setInputs: Dispatch<SetStateAction<VocabularyIF>>;
   fetchData: () => void;
-  showToast: boolean;
+  showToast?: boolean;
   setShowToast: Dispatch<SetStateAction<ToastState>>;
 }) {
   const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setShowToast((prev) => ({
-        ...prev,
-        isShow: false,
-      }));
-    }, 4000);
-
-    return () => clearTimeout(timeout);
-  }, [showToast]);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
