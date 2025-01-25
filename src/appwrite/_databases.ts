@@ -1,15 +1,30 @@
-import { ID } from "appwrite";
+import { ID, Models, Query } from "appwrite";
 import { databases } from "./config";
 
-const db = {};
+interface CollectionsIF {
+  dbId: string;
+  id: string;
+  name: string;
+}
 
-const collections = [
+type DatabaseType<T extends Models.Document = any> = {
+  readAll: (queries?: Query[]) => Promise<Models.DocumentList<T>>;
+  create: (data: T, id?: string) => Promise<Models.Document>;
+  delete: (id: string) => void;
+  readSingle: (id: string, queries?: Query[]) => Promise<Models.Document>;
+};
+
+const collections: CollectionsIF[] = [
   {
     dbId: import.meta.env.VITE_DATABASE_ID,
     id: import.meta.env.VITE_COLLECTION_LISTS_ID,
     name: "lists",
   },
 ];
+
+// type CollectionName = (typeof collections)[number]["name"];
+
+const db: Record<string, DatabaseType> = {};
 
 collections.forEach((collection) => {
   db[collection.name] = {

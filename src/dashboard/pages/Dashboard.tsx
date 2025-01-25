@@ -11,7 +11,10 @@ import Toast from "../../common-components/Toast";
 import { Query } from "appwrite";
 
 export default function Dashboard() {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [loading, setLoading] = useState<{ [key: string]: boolean }>({
+    table: false,
+  });
   const [vocabularies, setVocabularies] = useState<VocabularyIF[]>([]);
   const [inputs, setInputs] = useState<VocabularyIF>({
     english: "",
@@ -25,19 +28,16 @@ export default function Dashboard() {
 
   async function fetchData() {
     try {
-      setLoading(true);
       const result = await db.lists.readAll([Query.limit(100)]);
       setVocabularies(result.documents);
     } catch (error) {
       console.log(error);
-    } finally {
-      setLoading(false);
     }
   }
 
   async function deleteData(id: string) {
     try {
-      setLoading(true);
+      setLoading({ [`isDelete${id}`]: true });
       const response = await db.lists.delete(id);
       if (response) {
         fetchData();
@@ -57,7 +57,7 @@ export default function Dashboard() {
         message: `Vocabulary Failed Deleted, Error : ${error}`,
       });
     } finally {
-      setLoading(false);
+      setLoading({ [`isDelete${id}`]: true });
     }
   }
 
@@ -76,7 +76,6 @@ export default function Dashboard() {
     return () => clearTimeout(timeout);
   }, [showToast]);
 
-  // Definisi kolom tabel
   const columns = [
     {
       name: "No",
@@ -99,20 +98,42 @@ export default function Dashboard() {
       name: "action",
       cell: (row: any) => (
         <div className="flex gap-2">
-          <Button
-            colorVariant="blue"
-            sizeVariant="xs"
-            onClick={() => console.log(row.$id)}
-          >
-            Edit
-          </Button>
-          <Button
-            colorVariant="pink"
-            sizeVariant="xs"
-            onClick={() => deleteData(row.$id)}
-          >
-            Hapus
-          </Button>
+          {loading[`isEdit${row.$id}`] ? (
+            <div className="mr-3 mt-[6px]">
+              <Loading size="xs" />
+            </div>
+          ) : (
+            <Button
+              colorVariant="blue"
+              sizeVariant="xs"
+              onClick={async () => {
+                setLoading({ [`isEdit${row.$id}`]: true });
+                const response = await db.lists.readSingle(row.$id);
+                setIsEdit(true);
+                setInputs({
+                  english: response.english,
+                  indonesian: response.indonesian,
+                });
+                setLoading({ isEdit: false });
+              }}
+            >
+              Edit
+            </Button>
+          )}
+
+          {loading[`isDelete${row.$id}`] ? (
+            <div className="ml-3 mt-[6px]">
+              <Loading size="xs" />
+            </div>
+          ) : (
+            <Button
+              colorVariant="pink"
+              sizeVariant="xs"
+              onClick={() => deleteData(row.$id)}
+            >
+              Hapus
+            </Button>
+          )}
         </div>
       ),
     },
@@ -131,12 +152,23 @@ export default function Dashboard() {
             inputs={inputs}
             setInputs={setInputs}
             fetchData={fetchData}
-            showToast={showToast.isShow}
             setShowToast={setShowToast}
+            isEdit={isEdit}
+            setIsEdit={setIsEdit}
           />
 
           <div className="bg-white p-4 rounded-md">
-            {loading ? (
+            <div className="table-wrapper">
+              <DataTable
+                columns={columns}
+                data={vocabularies}
+                pagination
+                paginationComponent={CustomPagination}
+                paginationPerPage={10}
+                highlightOnHover
+              />
+            </div>
+            {/* {loading ? (
               <div className="flex justify-center py-10">
                 <Loading size="lg" />
               </div>
@@ -146,12 +178,12 @@ export default function Dashboard() {
                   columns={columns}
                   data={vocabularies}
                   pagination
-                  paginationComponent={CustomPagination} // Menggunakan pagination kustom
-                  paginationPerPage={5}
+                  paginationComponent={CustomPagination}
+                  paginationPerPage={10}
                   highlightOnHover
                 />
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>

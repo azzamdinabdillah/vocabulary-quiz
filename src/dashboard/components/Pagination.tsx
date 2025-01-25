@@ -14,10 +14,10 @@ export const CustomPagination = ({
   return (
     <div className="flex items-center mt-4">
       <div>
-        <p className="text-xs font-bold color-primary-black md:text-sm">{startRow > rowCount ? 0 : `${startRow}-${endRow}`} of {rowCount} row(s)</p>
+        <p className="text-xs font-bold color-primary-black md:text-sm select-none">{startRow > rowCount ? 0 : `${startRow}-${endRow}`} of {rowCount} row(s)</p>
       </div>
 
-      <div className="flex gap-2 w-[50%] justify-end ml-auto">
+      <div className="flex gap-2 w-[50%] justify-end ml-auto md:w-[200px]">
         <Button
           colorVariant="green"
           sizeVariant="xs"

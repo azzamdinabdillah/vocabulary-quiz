@@ -1,36 +1,37 @@
 import Button from "../../main/components/Button";
 import InputText from "./Inputs";
-import db from "../../appwrite/databases";
-import {
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  useState,
-} from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { VocabularyIF } from "../../main/interfaces/Vocabulary";
 import Loading from "../../common-components/Loading";
 import { ToastState } from "../../interfaces/Toast";
+import db from "../../appwrite/databases";
+
+interface AddVocabularyFormIF {
+  inputs: VocabularyIF;
+  setInputs: Dispatch<SetStateAction<VocabularyIF>>;
+  fetchData: () => void;
+  setShowToast: Dispatch<SetStateAction<ToastState>>;
+  isEdit: boolean;
+  setIsEdit: Dispatch<SetStateAction<boolean>>;
+}
 
 export default function AddVocabularyForm({
   inputs,
   setInputs,
   fetchData,
-  showToast,
-  setShowToast
-}: {
-  inputs: VocabularyIF;
-  setInputs: Dispatch<SetStateAction<VocabularyIF>>;
-  fetchData: () => void;
-  showToast?: boolean;
-  setShowToast: Dispatch<SetStateAction<ToastState>>;
-}) {
-  const [loading, setLoading] = useState<boolean>(false);
+  setShowToast,
+  isEdit,
+  setIsEdit,
+}: AddVocabularyFormIF) {
+  const [loading, setLoading] = useState<{ [key: string]: boolean }>({
+    buttonCreate: false,
+  });
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     try {
-      setLoading(true);
+      setLoading({ buttonCreate: true });
       const response = await db.lists.create(inputs);
       if (response) {
         fetchData();
@@ -55,7 +56,7 @@ export default function AddVocabularyForm({
         message: `Vocabulary Failed Added, Error : ${error}`,
       });
     } finally {
-      setLoading(false);
+      setLoading({ buttonCreate: false });
     }
   }
 
@@ -98,16 +99,43 @@ export default function AddVocabularyForm({
         </div>
 
         <div className="mt-1">
-          <Button colorVariant="blue" sizeVariant="regular" disabled={loading}>
-            {loading ? (
-              <div className="flex items-center justify-center gap-2">
-                <Loading size="sm" />
-                Please Wait...
-              </div>
-            ) : (
-              "Add To My Vocabluary List"
-            )}
-          </Button>
+          {isEdit ? (
+            <div className="flex gap-3 items-center">
+              <Button
+                colorVariant="yellow"
+                sizeVariant="regular"
+                type="button"
+                onClick={() => {
+                  setInputs({
+                    english: "",
+                    indonesian: "",
+                  });
+                  setIsEdit(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button colorVariant="blue" sizeVariant="regular" type="button">
+                Edit
+              </Button>
+            </div>
+          ) : (
+            <Button
+              type="submit"
+              colorVariant="blue"
+              sizeVariant="regular"
+              disabled={loading.buttonCreate}
+            >
+              {loading.buttonCreate ? (
+                <div className="flex items-center justify-center gap-2">
+                  <Loading size="sm" />
+                  Please Wait...
+                </div>
+              ) : (
+                "Add To My Vocabluary List"
+              )}
+            </Button>
+          )}
         </div>
       </form>
     </>

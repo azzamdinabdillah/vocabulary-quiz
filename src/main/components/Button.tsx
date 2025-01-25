@@ -31,7 +31,7 @@ function Button({
     <>
       <button
         {...props}
-        className={`disabled:opacity-80 capitalize button-hover-click w-full shadow-option-shadow flex justify-center items-center text-[#3D0F22] font-bold rounded-lg border-[4px] border-solid border-[#571530] whitespace-nowrap ${colorClasses[colorVariant]} ${sizeClasses[sizeVariant]}`}
+        className={`disabled:opacity-80 select-none capitalize button-hover-click w-full shadow-option-shadow flex justify-center items-center text-[#3D0F22] font-bold rounded-lg border-[4px] border-solid border-[#571530] whitespace-nowrap ${colorClasses[colorVariant]} ${sizeClasses[sizeVariant]}`}
       >
         {children}
       </button>

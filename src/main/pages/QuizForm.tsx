@@ -9,6 +9,7 @@ import db from "../../appwrite/databases";
 import Countdown from "react-countdown";
 import { VocabularyIF } from "../interfaces/Vocabulary";
 import Loading from "../../common-components/Loading";
+import { Query } from "appwrite";
 
 function QuizForm() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -64,7 +65,7 @@ function QuizForm() {
   async function fetchData(): Promise<VocabularyIF[] | void> {
     try {
       setLoading(true);
-      const result = await db.lists.readAll();
+      const result = await db.lists.readAll([Query.limit(100)]);
       setQuizes(result.documents);
     } catch (error) {
       console.log(error);
