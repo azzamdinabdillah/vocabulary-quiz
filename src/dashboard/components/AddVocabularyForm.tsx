@@ -60,6 +60,41 @@ export default function AddVocabularyForm({
     }
   }
 
+  async function updateData(datas: VocabularyIF) {
+    try {
+      setLoading({ buttonUpdate: true });
+      const response = await db.lists.update(datas.id, {
+        english: datas.english,
+        indonesian: datas.indonesian,
+      });
+
+      if (response) {
+        fetchData();
+        setShowToast({
+          isShow: true,
+          toastColor: "success",
+          message: "Vocabulary Successfuly Updated",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+
+      setShowToast({
+        isShow: true,
+        toastColor: "error",
+        message: "Vocabulary Failed Updated, Error: " + error,
+      });
+    } finally {
+      setInputs({
+        english: "",
+        indonesian: "",
+        id: "",
+      });
+      setLoading({ buttonUpdate: false });
+      setIsEdit(false);
+    }
+  }
+
   return (
     <>
       <form
@@ -109,14 +144,27 @@ export default function AddVocabularyForm({
                   setInputs({
                     english: "",
                     indonesian: "",
+                    id: "",
                   });
                   setIsEdit(false);
                 }}
               >
                 Cancel
               </Button>
-              <Button colorVariant="blue" sizeVariant="regular" type="button">
-                Edit
+              <Button
+                colorVariant="blue"
+                sizeVariant="regular"
+                type="button"
+                onClick={() => updateData(inputs)}
+              >
+                {loading.buttonUpdate ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <Loading size="sm" />
+                    Please Wait...
+                  </div>
+                ) : (
+                  "Update"
+                )}
               </Button>
             </div>
           ) : (

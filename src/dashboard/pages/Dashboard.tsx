@@ -113,6 +113,7 @@ export default function Dashboard() {
                 setInputs({
                   english: response.english,
                   indonesian: response.indonesian,
+                  id: row.$id
                 });
                 setLoading({ isEdit: false });
               }}

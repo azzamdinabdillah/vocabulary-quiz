@@ -28,6 +28,8 @@ collections.forEach((collection) => {
       databases.deleteDocument(collection.dbId, collection.id, id),
     readSingle: (id, queries = []) =>
       databases.getDocument(collection.dbId, collection.id, id, queries),
+    update: (id, datas) =>
+      databases.updateDocument(collection.dbId, collection.id, id, datas),
   };
 });
 
