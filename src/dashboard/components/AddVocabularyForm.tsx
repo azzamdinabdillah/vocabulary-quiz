@@ -88,7 +88,6 @@ export default function AddVocabularyForm({
       setInputs({
         english: "",
         indonesian: "",
-        id: "",
       });
       setLoading({ buttonUpdate: false });
       setIsEdit(false);
@@ -144,7 +143,6 @@ export default function AddVocabularyForm({
                   setInputs({
                     english: "",
                     indonesian: "",
-                    id: "",
                   });
                   setIsEdit(false);
                 }}
