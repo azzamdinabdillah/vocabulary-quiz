@@ -225,7 +225,7 @@
   }
 
   .drawer-p {
-    @apply text-black text-opacity-80 text-2xl font-medium;
+    @apply text-primary-black text-opacity-80 text-2xl font-medium;
   }
 
   .drawer-h3 {

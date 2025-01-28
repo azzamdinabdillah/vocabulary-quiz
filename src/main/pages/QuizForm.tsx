@@ -13,8 +13,7 @@ import { Query } from "appwrite";
 
 function QuizForm() {
   const [loading, setLoading] = useState<boolean>(false);
-  const [quizes, setQuizes] = useState<VocabularyIF[]>([]);
-  const [activeQuestion, setActiveQuestion] = useState<number>(0);
+  // const [activeQuestion, setActiveQuestion] = useState<number>(0);
   const [countdownTime, setCoundownTime] = useState<number>(
     Date.now() + 5 * 60 * 1000
   );
@@ -22,11 +21,11 @@ function QuizForm() {
   const drawerStatsContext = useContext(DrawerStatsContext);
 
   function randomIndex() {
-    return Math.floor(Math.random() * quizes.length);
+    return Math.floor(Math.random() * drawerStatsContext?.quizes.length!);
   }
 
   function handleOptionClick(answer: string, answerKey: string): void {
-    setActiveQuestion((prevState) => prevState + 1);
+    drawerStatsContext?.setActiveQuestion((prevState) => prevState + 1);
     const answerSplit = answer.split(" ");
     const audio = new Audio("/sounds/option-hit.mp3");
 
@@ -48,8 +47,8 @@ function QuizForm() {
       });
     }
 
-    if (activeQuestion === quizes.length - 1) {
-      setActiveQuestion(0);
+    if (drawerStatsContext?.activeQuestion === drawerStatsContext?.quizes.length! - 1) {
+      drawerStatsContext?.setActiveQuestion(0);
       drawerStatsContext?.setAnswerStats({
         answered: 0,
         rightAnswered: 0,
@@ -66,7 +65,7 @@ function QuizForm() {
     try {
       setLoading(true);
       const result = await db.lists.readAll([Query.limit(100)]);
-      setQuizes(result.documents);
+      drawerStatsContext?.setQuizes(result.documents);
     } catch (error) {
       console.log(error);
     } finally {
@@ -79,10 +78,10 @@ function QuizForm() {
   }, []);
 
   useEffect(() => {
-    if (quizes.length > 0) {
+    if (drawerStatsContext?.quizes.length! > 0) {
       randomIndex();
     }
-  }, [quizes]);
+  }, [drawerStatsContext?.quizes]);
 
   return (
     <div className="gap-4 flex flex-col">
@@ -91,7 +90,7 @@ function QuizForm() {
           <img src="/icons/interrogation.svg" alt="" />
           <p className="text-primary-black font-bold text-base">
             {(drawerStatsContext?.answerStats.answered ?? 0) + 1}/
-            {quizes.length}
+            {drawerStatsContext?.quizes.length}
           </p>
         </div>
         <p className="text-primary-black font-bold text-base">150 Points</p>
@@ -126,11 +125,11 @@ function QuizForm() {
             <Loading size="lg" />
           </div>
         ) : (
-          quizes.map((quiz, index) => {
-            if (activeQuestion !== index) return null;
+          drawerStatsContext?.quizes.map((quiz, index) => {
+            if (drawerStatsContext?.activeQuestion !== index) return null;
 
             const correctAnswer = quiz.indonesian;
-            const wrongAnswer = quizes
+            const wrongAnswer = drawerStatsContext?.quizes
               .filter((q) => q.indonesian !== correctAnswer)
               .sort(() => Math.random() - 0.5)
               .slice(0, 3);

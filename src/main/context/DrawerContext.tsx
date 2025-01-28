@@ -1,5 +1,6 @@
 import { createContext, Dispatch, SetStateAction } from "react";
 import { AnsweredIF } from "../interfaces/AnsweredStats";
+import { VocabularyIF } from "../interfaces/Vocabulary";
 
 interface DrawerSettingsIF {
   openSettingsDrawer: boolean;
@@ -13,6 +14,10 @@ interface DrawerStatsIF {
   setOpenStatsDrawer: Dispatch<SetStateAction<boolean>>;
   answerStats: AnsweredIF;
   setAnswerStats: Dispatch<SetStateAction<AnsweredIF>>;
+  quizes: VocabularyIF[],
+  setQuizes: Dispatch<SetStateAction<VocabularyIF[]>>;
+  activeQuestion: number,
+  setActiveQuestion: Dispatch<SetStateAction<number>>;
 }
 
 const DrawerStatsContext = createContext<DrawerStatsIF | undefined>(undefined);

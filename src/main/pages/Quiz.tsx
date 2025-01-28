@@ -8,6 +8,7 @@ import {
 } from "../context/DrawerContext";
 import DrawerSettings from "../components/drawer/DrawerSettings";
 import { AnsweredIF } from "../interfaces/AnsweredStats";
+import { VocabularyIF } from "../interfaces/Vocabulary";
 
 function Quiz() {
   const [openStatsDrawer, setOpenStatsDrawer] = useState<boolean>(false);
@@ -18,13 +19,24 @@ function Quiz() {
     rightAnswered: 0,
     wrongAnswered: 0,
   });
+  const [activeQuestion, setActiveQuestion] = useState<number>(0);
+  const [quizes, setQuizes] = useState<VocabularyIF[]>([]);
 
   return (
     <DrawerSettingsContext.Provider
       value={{ openSettingsDrawer, setOpenSettingsDrawer, onSound, setOnSound }}
     >
       <DrawerStatsContext.Provider
-        value={{ openStatsDrawer, setOpenStatsDrawer, answerStats, setAnswerStats }}
+        value={{
+          openStatsDrawer,
+          setOpenStatsDrawer,
+          answerStats,
+          setAnswerStats,
+          quizes,
+          setQuizes,
+          activeQuestion,
+          setActiveQuestion,
+        }}
       >
         <div className="w-full relative main-quiz-page">
           <MainNavbar />
