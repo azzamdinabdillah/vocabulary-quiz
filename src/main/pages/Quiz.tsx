@@ -7,20 +7,30 @@ import {
   DrawerStatsContext,
 } from "../context/DrawerContext";
 import DrawerSettings from "../components/drawer/DrawerSettings";
-import { AnsweredIF } from "../interfaces/AnsweredStats";
-import { VocabularyIF } from "../interfaces/Vocabulary";
+import { QuizIF } from "../interfaces/Vocabulary";
+import { AnswerStatsIF } from "../interfaces/AnsweredStats";
 
 function Quiz() {
   const [openStatsDrawer, setOpenStatsDrawer] = useState<boolean>(false);
   const [openSettingsDrawer, setOpenSettingsDrawer] = useState<boolean>(false);
   const [onSound, setOnSound] = useState<boolean>(true);
-  const [answerStats, setAnswerStats] = useState<AnsweredIF>({
-    answered: 0,
-    rightAnswered: 0,
-    wrongAnswered: 0,
-  });
+  // const [answerStats, setAnswerStats] = useState<AnsweredIF>({
+  //   answered: 0,
+  //   rightAnswered: 0,
+  //   wrongAnswered: 0,
+  // });
+  const [answerStats, setAnswerStats] = useState<AnswerStatsIF[]>([
+    {
+      id: "0",
+      isSelected: "kursi",
+      isAnswered: false,
+      answer: "kursi",
+      isCorrect: false,
+      optionSelectedIndex: -1,
+    },
+  ]);
   const [activeQuestion, setActiveQuestion] = useState<number>(0);
-  const [quizes, setQuizes] = useState<VocabularyIF[]>([]);
+  const [quizes, setQuizes] = useState<QuizIF[]>([]);
 
   return (
     <DrawerSettingsContext.Provider
