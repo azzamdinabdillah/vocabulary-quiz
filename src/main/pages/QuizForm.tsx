@@ -20,6 +20,18 @@ function QuizForm() {
   const drawerSettingsContext = useContext(DrawerSettingsContext);
   const drawerStatsContext = useContext(DrawerStatsContext);
 
+  function getPoints(): number {
+    const totalQuestions = drawerStatsContext?.quizes.length ?? 0;
+    const rightAnswer =
+      drawerStatsContext?.answerStats.filter(
+        (stat) => stat.isCorrect === true
+      ) ?? [];
+    const maksimumValue = 100;
+
+    const correctPercentage = (rightAnswer.length / totalQuestions) * 100;
+    return Math.round((correctPercentage * maksimumValue) / 100);
+  }
+
   function randomIndex() {
     return Math.floor(Math.random() * drawerStatsContext?.quizes.length!);
   }
@@ -74,6 +86,7 @@ function QuizForm() {
       drawerStatsContext?.quizes.length! - 1
     ) {
       drawerStatsContext?.setActiveQuestion(0);
+      window.location.reload();
       // drawerStatsContext?.setAnswerStats({
       //   answered: 0,
       //   rightAnswered: 0,
@@ -141,7 +154,9 @@ function QuizForm() {
             {drawerStatsContext?.quizes.length}
           </p>
         </div>
-        <p className="text-primary-black font-bold text-base">150 Points</p>
+        <p className="text-primary-black font-bold text-base">
+          {getPoints()}/ 100 Points
+        </p>
         <div className="flex items-center">
           <p className="text-primary-black font-bold text-base">
             <Countdown
