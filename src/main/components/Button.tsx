@@ -7,11 +7,13 @@ function Button({
   children,
   colorVariant,
   sizeVariant = "lg",
+  className,
   ...props
 }: {
   children: ReactNode | string;
   colorVariant: ColorVariants;
   sizeVariant?: SizeVariants;
+  className?: string,
 } & ButtonHTMLAttributes<HTMLButtonElement>) {
   const colorClasses: Record<ColorVariants, string> = {
     pink: "bg-[#F03986]",
@@ -31,7 +33,7 @@ function Button({
     <>
       <button
         {...props}
-        className={`disabled:opacity-80 select-none capitalize button-hover-click w-full shadow-option-shadow flex justify-center items-center text-[#3D0F22] font-bold rounded-lg border-[4px] border-solid border-[#571530] whitespace-nowrap ${colorClasses[colorVariant]} ${sizeClasses[sizeVariant]}`}
+        className={`${className} disabled:opacity-80 select-none capitalize button-hover-click w-full shadow-option-shadow flex justify-center items-center text-[#3D0F22] font-bold rounded-lg border-[4px] border-solid border-[#571530] whitespace-nowrap ${colorClasses[colorVariant]} ${sizeClasses[sizeVariant]}`}
       >
         {children}
       </button>

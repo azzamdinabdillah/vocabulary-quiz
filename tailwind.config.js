@@ -5,6 +5,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      backgroundImage: {
+        'option-check': "url('/public/icons/option-check.svg')"
+      },
       boxShadow: {
         "option-shadow": "5px 5px 0px 0px rgba(21, 69, 31, 1)",
         "toggle-shadow": "3px 3px 0px 0px rgba(21, 69, 31, 1)",

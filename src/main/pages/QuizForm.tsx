@@ -184,34 +184,30 @@ function QuizForm() {
 
                 <div className="gap-3 flex flex-col">
                   {quiz.options.map((opt, idx) => (
-                    <div
-                      key={idx}
+                    <Button
                       className={
                         drawerStatsContext.answerStats[index]
                           .optionSelectedIndex === idx
-                          ? "border-orange-300 border-4 p-3"
+                          ? "after:bg-option-check after:bg-contain after:bg-center after:contents-[''] after:w-5 after:h-5 after:absolute after:top-1/2 after:-translate-y-1/2 after:right-5 relative"
                           : ""
                       }
+                      key={idx}
+                      onClick={(e) =>
+                        handleOptionClick(
+                          e.currentTarget.textContent!,
+                          quiz.indonesian,
+                          quiz.$id!,
+                          idx
+                        )
+                      }
+                      colorVariant={
+                        ["pink", "green", "yellow", "blue"][
+                          idx % quiz.options.length
+                        ] as ColorVariants
+                      }
                     >
-                      <Button
-                        key={idx}
-                        onClick={(e) =>
-                          handleOptionClick(
-                            e.currentTarget.textContent!,
-                            quiz.indonesian,
-                            quiz.$id!,
-                            idx
-                          )
-                        }
-                        colorVariant={
-                          ["pink", "green", "yellow", "blue"][
-                            idx % quiz.options.length
-                          ] as ColorVariants
-                        }
-                      >
-                        {String.fromCharCode(65 + idx)}) {opt}
-                      </Button>
-                    </div>
+                      {String.fromCharCode(65 + idx)}) {opt}
+                    </Button>
                   ))}
                 </div>
               </Fragment>
