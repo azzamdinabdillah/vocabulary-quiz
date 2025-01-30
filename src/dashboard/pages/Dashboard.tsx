@@ -169,22 +169,6 @@ export default function Dashboard() {
                 highlightOnHover
               />
             </div>
-            {/* {loading ? (
-              <div className="flex justify-center py-10">
-                <Loading size="lg" />
-              </div>
-            ) : (
-              <div className="table-wrapper">
-                <DataTable
-                  columns={columns}
-                  data={vocabularies}
-                  pagination
-                  paginationComponent={CustomPagination}
-                  paginationPerPage={10}
-                  highlightOnHover
-                />
-              </div>
-            )} */}
           </div>
         </div>
       </div>

@@ -36,7 +36,7 @@ function QuizForm() {
     return Math.floor(Math.random() * drawerStatsContext?.quizes.length!);
   }
 
-  function setAnswerStatsToInitial(datas) {
+  function setAnswerStatsToInitial(datas: any) {
     drawerStatsContext?.setAnswerStats(
       datas.documents.map((quiz: any): AnswerStatsIF => {
         return {

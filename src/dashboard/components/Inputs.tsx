@@ -11,6 +11,7 @@ export default function InputText({
 }) {
   return (
     <input
+      required
       type="text"
       className="input-custom"
       placeholder={placeholder}
