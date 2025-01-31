@@ -4,6 +4,7 @@ import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { VocabularyIF } from "../../main/interfaces/Vocabulary";
 import Loading from "../../common-components/Loading";
 import { ToastState } from "../../interfaces/Toast";
+// @ts-ignore
 import db from "../../appwrite/databases";
 
 interface AddVocabularyFormIF {

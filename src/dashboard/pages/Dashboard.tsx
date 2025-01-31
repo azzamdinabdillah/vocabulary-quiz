@@ -2,6 +2,7 @@ import DataTable from "react-data-table-component";
 import Button from "../../main/components/Button";
 import { useEffect, useState } from "react";
 import { VocabularyIF } from "../../main/interfaces/Vocabulary";
+// @ts-ignore
 import db from "../../appwrite/databases";
 import { CustomPagination } from "../components/Pagination";
 import AddVocabularyForm from "../components/AddVocabularyForm";
@@ -76,7 +77,7 @@ export default function Dashboard() {
     return () => clearTimeout(timeout);
   }, [showToast]);
 
-  const columns = [
+  const columns: any = [
     {
       name: "No",
       selector: (_row: any, index: number) => index + 1,
