@@ -5,6 +5,7 @@ import {
   DrawerSettingsContext,
   DrawerStatsContext,
 } from "../context/DrawerContext";
+// @ts-ignore
 import db from "../../appwrite/databases";
 import Countdown from "react-countdown";
 import { QuizIF, VocabularyIF } from "../interfaces/Vocabulary";
@@ -14,9 +15,7 @@ import { AnswerStatsIF } from "../interfaces/AnsweredStats";
 
 function QuizForm() {
   const [loading, setLoading] = useState<boolean>(false);
-  const [countdownTime, setCoundownTime] = useState<number>(
-    Date.now() + 5 * 60 * 1000
-  );
+  const [countdownTime] = useState<number>(Date.now() + 5 * 60 * 1000);
   const drawerSettingsContext = useContext(DrawerSettingsContext);
   const drawerStatsContext = useContext(DrawerStatsContext);
 
