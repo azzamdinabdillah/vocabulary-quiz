@@ -14,11 +14,6 @@ function Quiz() {
   const [openStatsDrawer, setOpenStatsDrawer] = useState<boolean>(false);
   const [openSettingsDrawer, setOpenSettingsDrawer] = useState<boolean>(false);
   const [onSound, setOnSound] = useState<boolean>(true);
-  // const [answerStats, setAnswerStats] = useState<AnsweredIF>({
-  //   answered: 0,
-  //   rightAnswered: 0,
-  //   wrongAnswered: 0,
-  // });
   const [answerStats, setAnswerStats] = useState<AnswerStatsIF[]>([
     {
       id: "0",

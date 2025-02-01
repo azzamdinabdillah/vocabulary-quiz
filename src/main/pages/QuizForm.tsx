@@ -127,7 +127,7 @@ function QuizForm() {
             .slice(0, 3)
             .map((q: any) => q.indonesian);
 
-          const shuffeldOptions = [...wrongAnswer, correctAnswer];
+          const shuffeldOptions = [...wrongAnswer, correctAnswer].sort(() => Math.random() - 0.5);
 
           return {
             ...quiz,
