@@ -12,6 +12,8 @@ import { QuizIF, VocabularyIF } from "../interfaces/Vocabulary";
 import Loading from "../../common-components/Loading";
 import { Query } from "appwrite";
 import { AnswerStatsIF } from "../interfaces/AnsweredStats";
+import Modal from "../../common-components/Modal";
+import StatsQuiz from "../components/StatsQuiz";
 
 function QuizForm() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -22,6 +24,7 @@ function QuizForm() {
     null
   );
   const [audioWrong, setAudioWrong] = useState<HTMLAudioElement | null>(null);
+  const [modalStats, setModalStats] = useState<boolean>(false);
 
   useEffect(() => {
     setAudioCorrect(new Audio("/sounds/correct-answer.wav"));
@@ -104,7 +107,7 @@ function QuizForm() {
       drawerStatsContext?.quizes.length! - 1
     ) {
       drawerStatsContext?.setActiveQuestion(0);
-      window.location.reload();
+      setModalStats(true);
       // drawerStatsContext?.setAnswerStats({
       //   answered: 0,
       //   rightAnswered: 0,
@@ -127,7 +130,9 @@ function QuizForm() {
             .slice(0, 3)
             .map((q: any) => q.indonesian);
 
-          const shuffeldOptions = [...wrongAnswer, correctAnswer].sort(() => Math.random() - 0.5);
+          const shuffeldOptions = [...wrongAnswer, correctAnswer].sort(
+            () => Math.random() - 0.5
+          );
 
           return {
             ...quiz,
@@ -159,6 +164,22 @@ function QuizForm() {
 
   return (
     <div className="gap-4 flex flex-col">
+      {modalStats ? (
+        <Modal setModalStats={setModalStats}>
+          <StatsQuiz />
+
+          <Button
+            sizeVariant="regular"
+            colorVariant="green"
+            className="mt-2"
+            onClick={() => window.location.reload()}
+          >
+            Ulangi
+          </Button>
+        </Modal>
+      ) : (
+        ""
+      )}
       <div className="flex justify-between items-center border-bottom-black py-[10px]">
         <div className="flex items-center">
           <img src="/icons/interrogation.svg" alt="" />
