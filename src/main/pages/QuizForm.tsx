@@ -68,6 +68,12 @@ function QuizForm() {
     idQuestion: string,
     idOption: number
   ): void {
+    // if (
+    //   drawerStatsContext?.activeQuestion ===
+    //   drawerStatsContext?.quizes.length! - 1
+    // )
+    //   return;
+
     drawerStatsContext?.setActiveQuestion((prevState) => prevState + 1);
     const answerSplit = answer.split(" ");
 
@@ -100,19 +106,6 @@ function QuizForm() {
       } else {
         audioWrong.play();
       }
-    }
-
-    if (
-      drawerStatsContext?.activeQuestion ===
-      drawerStatsContext?.quizes.length! - 1
-    ) {
-      drawerStatsContext?.setActiveQuestion(0);
-      setModalStats(true);
-      // drawerStatsContext?.setAnswerStats({
-      //   answered: 0,
-      //   rightAnswered: 0,
-      //   wrongAnswered: 0,
-      // });
     }
   }
 
@@ -174,7 +167,7 @@ function QuizForm() {
             className="mt-2"
             onClick={() => window.location.reload()}
           >
-            Ulangi
+            Ulangi Dari Awal
           </Button>
         </Modal>
       ) : (
@@ -265,6 +258,22 @@ function QuizForm() {
           })
         )}
       </div>
+
+      {(drawerStatsContext?.activeQuestion ?? 0) ===
+      (drawerStatsContext?.quizes.length ?? 0) ? (
+        <Button
+          colorVariant="pink"
+          sizeVariant="regular"
+          className=""
+          onClick={() => {
+            confirm("Yakin Selesai?") ? setModalStats(true) : "";
+          }}
+        >
+          Klik Jika Sudah Selesai
+        </Button>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
