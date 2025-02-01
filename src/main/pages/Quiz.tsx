@@ -9,6 +9,7 @@ import {
 import DrawerSettings from "../components/drawer/DrawerSettings";
 import { QuizIF } from "../interfaces/Vocabulary";
 import { AnswerStatsIF } from "../interfaces/AnsweredStats";
+import ButtonNextPrevQuestion from "../components/ButtonNextPrevQuestion";
 
 function Quiz() {
   const [openStatsDrawer, setOpenStatsDrawer] = useState<boolean>(false);
@@ -53,6 +54,8 @@ function Quiz() {
           <div className="quiz">
             <QuizForm />
           </div>
+
+          <ButtonNextPrevQuestion />
         </div>
       </DrawerStatsContext.Provider>
     </DrawerSettingsContext.Provider>

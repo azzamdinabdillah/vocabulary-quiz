@@ -114,7 +114,7 @@ export default function Dashboard() {
                 setInputs({
                   english: response.english,
                   indonesian: response.indonesian,
-                  id: row.$id
+                  id: row.$id,
                 });
                 setLoading({ isEdit: false });
               }}
@@ -148,7 +148,14 @@ export default function Dashboard() {
       </Toast>
       <div className="dashboard-page w-full px-5 py-5">
         <div className="w-full flex flex-col gap-3 md:max-w-[665px] mx-auto">
-          <h1 className="title">Dashboard</h1>
+          <div className="flex justify-between items-center">
+            <h1 className="title">Dashboard</h1>
+            <a href="/">
+              <Button sizeVariant="sm" colorVariant="green" className="w-fit">
+                Back To Quiz
+              </Button>
+            </a>
+          </div>
 
           <AddVocabularyForm
             inputs={inputs}
