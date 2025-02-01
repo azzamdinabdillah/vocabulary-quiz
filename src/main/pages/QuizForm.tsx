@@ -18,6 +18,15 @@ function QuizForm() {
   const [countdownTime] = useState<number>(Date.now() + 5 * 60 * 1000);
   const drawerSettingsContext = useContext(DrawerSettingsContext);
   const drawerStatsContext = useContext(DrawerStatsContext);
+  const [audioCorrect, setAudioCorrect] = useState<HTMLAudioElement | null>(
+    null
+  );
+  const [audioWrong, setAudioWrong] = useState<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    setAudioCorrect(new Audio("/sounds/correct-answer.wav"));
+    setAudioWrong(new Audio("/sounds/wrong-answer.mp3"));
+  }, []);
 
   function getPoints(): number {
     const totalQuestions = drawerStatsContext?.quizes.length ?? 0;
@@ -58,7 +67,6 @@ function QuizForm() {
   ): void {
     drawerStatsContext?.setActiveQuestion((prevState) => prevState + 1);
     const answerSplit = answer.split(" ");
-    const audio = new Audio("/sounds/option-hit.mp3");
 
     drawerStatsContext?.setQuizes((prevState) => {
       return prevState.map((item) =>
@@ -80,6 +88,17 @@ function QuizForm() {
       );
     });
 
+    if (drawerSettingsContext?.onSound && audioCorrect && audioWrong) {
+      audioCorrect.currentTime = 0;
+      audioWrong.currentTime = 0;
+
+      if (answerSplit[1] === answerKey) {
+        audioCorrect.play();
+      } else {
+        audioWrong.play();
+      }
+    }
+
     if (
       drawerStatsContext?.activeQuestion ===
       drawerStatsContext?.quizes.length! - 1
@@ -91,10 +110,6 @@ function QuizForm() {
       //   rightAnswered: 0,
       //   wrongAnswered: 0,
       // });
-    }
-
-    if (drawerSettingsContext?.onSound) {
-      audio.play();
     }
   }
 
