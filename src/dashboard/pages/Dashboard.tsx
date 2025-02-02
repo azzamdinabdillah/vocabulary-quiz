@@ -105,6 +105,7 @@ export default function Dashboard() {
             </div>
           ) : (
             <Button
+              className="text-[10px] px-[5px] h-[27px] shadow-toggle-shadow"
               colorVariant="blue"
               sizeVariant="xs"
               onClick={async () => {
@@ -129,6 +130,7 @@ export default function Dashboard() {
             </div>
           ) : (
             <Button
+              className="text-[10px] px-[5px] h-[27px] shadow-toggle-shadow"
               colorVariant="pink"
               sizeVariant="xs"
               onClick={() => deleteData(row.$id)}
