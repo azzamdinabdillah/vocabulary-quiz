@@ -131,7 +131,8 @@
 }
 
 .main-quiz-page {
-  max-width: 375px;
+  /* max-width: 375px; */
+  max-width: 500px;
   overflow: hidden;
   min-height: 100vh;
   background-color: #fff9e4;

@@ -228,12 +228,12 @@ function QuizForm() {
                 <div className="gap-3 flex flex-col">
                   {quiz.options.map((opt, idx) => (
                     <Button
-                      className={
+                      className={`${
                         drawerStatsContext.answerStats[index]
                           .optionSelectedIndex === idx
                           ? "after:bg-option-check after:bg-contain after:bg-center after:contents-[''] after:w-5 after:h-5 after:absolute after:top-1/2 after:-translate-y-1/2 after:right-5 relative"
                           : ""
-                      }
+                      } flex-grow max-w-full`}
                       key={idx}
                       onClick={(e) =>
                         handleOptionClick(

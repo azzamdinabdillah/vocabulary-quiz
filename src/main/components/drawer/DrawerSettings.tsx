@@ -89,7 +89,7 @@ function DrawerSettings() {
           </div>
 
           <div className="mt-10">
-            <Button colorVariant="green">
+            <Button colorVariant="green" className="max-w-full">
               <a href="/dashboard">Go To Dashboard Pages</a>
             </Button>
           </div>
