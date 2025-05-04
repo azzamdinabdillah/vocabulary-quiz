@@ -1,50 +1,58 @@
-# React + TypeScript + Vite
+# 🎉 Vocabulary-Quiz – Project Sederhana 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Halo! Saya ingin berbagi sedikit pencapaian kecil saya.  
+Baru saja menyelesaikan project sederhana yang saya beri nama **Vocabulary-Quiz**.
 
-Currently, two official plugins are available:
+Aplikasi ini saya buat dari awal sebagai bagian dari proses belajar dan eksplorasi dalam dunia pengembangan aplikasi.  
+Meskipun masih jauh dari sempurna, saya sangat bersyukur bisa menyelesaikannya. Berikut ceritanya:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack yang Digunakan
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. 🔧 **Backend**: Appwrite (powerful & mudah digunakan!)
+2. 🖥️ **Frontend**: React + TypeScript (untuk maintainability & scalability)
+3. 🎨 **Styling**: TailwindCSS dengan tema **Neobrutalism** (semua komponen saya slicing dari 0, tanpa template!)
 
-- Configure the top-level `parserOptions` property like this:
+---
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 🎯 Fitur-Fitur Utama
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+1. 📚 **Quiz Vocabulary** – Fokus pada pembelajaran vocabulary bahasa Inggris.
+2. 🧾 **Dashboard Vocabulary** – Tambah, hapus, dan edit daftar vocabulary sendiri.
+3. 📊 **Statistik Nilai** – Menampilkan jumlah jawaban benar dan salah.
+4. 🧭 **Navigasi Soal** – Bisa melompat ke soal tertentu sesuai keinginan.
+5. 🎵 **Backsound & Feedback Audio** – Musik pengiring & suara untuk jawaban benar/salah.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+---
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## 🎓 Tujuan Pembelajaran
+
+Aplikasi ini dibuat untuk membantu teman-teman yang ingin memperkuat hafalan vocabulary bahasa Inggris melalui latihan kuis interaktif.
+
+---
+
+## 🚧 Catatan
+
+Saat ini **fitur login belum tersedia**, jadi vocabulary yang diinput masih tercampur antar pengguna.  
+Tapi ini bisa jadi fitur menarik untuk update berikutnya. Kalau banyak yang tertarik, saya akan lanjutkan pengembangannya. 😊
+
+---
+
+## 🌟 Tujuan Saya
+
+Project ini saya buat sebagai sarana **belajar** dan **eksperimen teknologi** seperti Appwrite dan React TS.  
+Saya sangat terbuka terhadap **kritik dan saran** dari teman-teman.  
+Jika ada ide pengembangan, jangan ragu untuk berbagi! 🙌
+
+---
+
+## 🔗 Link Penting
+
+- 🌐 [Aplikasi](https://lnkd.in/gv8iSHsy)  
+- 💻 [Repository](https://lnkd.in/gPW9tg7q)
+
+---
+
+Terima kasih sudah mampir! 😄  
+Jangan ragu kasih feedback ya! 🙏
